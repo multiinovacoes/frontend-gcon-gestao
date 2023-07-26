@@ -1,0 +1,171 @@
+<app-header-breadcrumb></app-header-breadcrumb>
+<form #f="ngForm" autocomplete="off" (ngSubmit)="salvar(f)">
+<p-panel header="Configurações do Atendimento">
+
+  <div class="p-fluid">
+
+    <div class="p-field p-grid">
+      <label for="qtdDiasVencer"
+      class="p-col-12 p-md-9">
+      Informe o número máximo de dias para dar uma resposta a um usuário
+      </label>
+      <div class="p-col-12 p-md-2">
+          <input id="qtdDiasVencer"
+          type="text"
+          name="qtdDiasVencer"
+          [(ngModel)]="configuracao.qtdDiasVencer"
+          #qtdDiasVencer="ngModel"
+          required
+          pInputText>
+          <app-message [control]="qtdDiasVencer" error="required"
+          text="Informe um valor"></app-message>
+      </div>
+    </div>
+
+    <div class="p-field p-grid">
+      <label for="qtdDiasEncaminhamento"
+      class="p-col-12 p-md-9">
+      Informe o número máximo de dias que as unidades organizacionais deverão retornar os encaminhamentos
+      </label>
+      <div class="p-col-12 p-md-2">
+          <input id="qtdDiasEncaminhamento"
+          type="text"
+          name="qtdDiasEncaminhamento"
+          [(ngModel)]="configuracao.qtdDiasEncaminhamento"
+          #qtdDiasEncaminhamento="ngModel"
+          required
+          pInputText>
+          <app-message [control]="qtdDiasEncaminhamento" error="required"
+          text="Informe um valor"></app-message>
+      </div>
+    </div>
+
+
+    <div class="p-field p-grid">
+      <label for="qtdDiasAlertaEncaminhamento"
+      class="p-col-12 p-md-9">
+      Informe o número de dias de antecedência que desejamos que o sistema avise para cobrarmos os encaminhamentos que foram enviados
+      </label>
+      <div class="p-col-12 p-md-2">
+          <input id="qtdDiasAlertaEncaminhamento"
+          type="text"
+          name="qtdDiasAlertaEncaminhamento"
+          [(ngModel)]="configuracao.qtdDiasAlertaEncaminhamento"
+          #qtdDiasAlertaEncaminhamento="ngModel"
+          required
+          pInputText>
+
+          <app-message [control]="qtdDiasAlertaEncaminhamento" error="required"
+          text="Informe um valor"></app-message>
+      </div>
+    </div>
+
+    <div class="p-field p-grid">
+      <label for="qtdMaxProrrogaPrazoAtendimento"
+      class="p-col-12 p-md-9">
+      Informe o número máximo de dias que os atendimentos podem ser prorrogados
+      </label>
+      <div class="p-col-12 p-md-2">
+          <input id="qtdMaxProrrogaPrazoAtendimento"
+          type="text"
+          name="qtdMaxProrrogaPrazoAtendimento"
+          [(ngModel)]="configuracao.qtdMaxProrrogaPrazoAtendimento"
+          #qtdMaxProrrogaPrazoAtendimento="ngModel"
+          required
+          pInputText>
+          <app-message [control]="qtdMaxProrrogaPrazoAtendimento" error="required"
+          text="Informe um valor"></app-message>
+      </div>
+    </div>
+
+    <div class="p-field p-grid">
+      <label for="qtdDiasPermitirAbrirRecurso"
+      class="p-col-12 p-md-9">
+      Informe o número máximo de dias que o usuário poderá abrir recurso
+      </label>
+      <div class="p-col-12 p-md-2">
+          <input id="qtdDiasPermitirAbrirRecurso"
+          type="text"
+          name="qtdDiasPermitirAbrirRecurso"
+          [(ngModel)]="configuracao.qtdDiasPermitirAbrirRecurso"
+          #qtdDiasPermitirAbrirRecurso="ngModel"
+          required
+          pInputText>
+          <app-message [control]="qtdDiasPermitirAbrirRecurso" error="required"
+          text="Informe um valor"></app-message>
+      </div>
+    </div>
+
+    <div class="p-field p-grid">
+      <label for="qtdDiasVencerRecurso"
+      class="p-col-12 p-md-9">
+      Informe o número máximo de dias para dar uma resposta do recurso a um usuário
+      </label>
+      <div class="p-col-12 p-md-2">
+          <input id="qtdDiasVencerRecurso"
+          type="text"
+          name="qtdDiasVencerRecurso"
+          [(ngModel)]="configuracao.qtdDiasVencerRecurso"
+          #qtdDiasVencerRecurso="ngModel"
+          required
+          pInputText>
+          <app-message [control]="qtdDiasVencerRecurso" error="required"
+          text="Informe um valor"></app-message>
+      </div>
+    </div>
+
+    <div class="p-field p-grid">
+      <label for="qtdDiasAlertaRecurso"
+      class="p-col-12 p-md-9">
+      Informe o número de dias de antecedência que desejamos que o sistema avise para cobrarmos os recursos que foram enviados
+      </label>
+      <div class="p-col-12 p-md-2">
+          <input id="qtdDiasAlertaRecurso"
+          type="text"
+          name="qtdDiasAlertaRecurso"
+          [(ngModel)]="configuracao.qtdDiasAlertaRecurso"
+          #qtdDiasAlertaRecurso="ngModel"
+          required
+          pInputText>
+          <app-message [control]="qtdDiasAlertaRecurso" error="required"
+          text="Informe um valor"></app-message>
+      </div>
+    </div>
+
+    <div class="p-field p-grid">
+      <label for="disparaEmailCobrancaAtendimento"
+      class="p-col-12 p-md-9">
+      Desejo enviar emails automaticos de cobrança dos atendimentos
+      </label>
+      <div class="p-col-12 p-md-2">
+        <p-checkbox name="disparaEmailCobrancaAtendimento"
+        name="disparaEmailCobrancaAtendimento"
+        [binary]="true"
+        [(ngModel)]="configuracao.disparaEmailCobrancaAtendimento"
+        #disparaEmailCobrancaAtendimento="ngModel"
+        inputId="disparaEmailCobrancaAtendimento"></p-checkbox>
+    </div>
+    </div>
+
+    <div class="p-field p-grid">
+      <label for="disparaEmailCobrancaRecurso"
+      class="p-col-12 p-md-9">
+      Desejo enviar emails automaticos de cobrança dos recursos
+      </label>
+      <div class="p-col-12 p-md-2">
+        <p-checkbox name="disparaEmailCobrancaRecurso"
+        name="disparaEmailCobrancaRecurso"
+        [binary]="true"
+        [(ngModel)]="configuracao.disparaEmailCobrancaRecurso"
+        #disparaEmailCobrancaRecurso="ngModel"
+        inputId="disparaEmailCobrancaRecurso"></p-checkbox>
+    </div>
+    </div>
+
+  </div>
+
+  <p-footer>
+    <button pButton type="submit" label="Salvar" class="ui-button prime-button" [disabled]="f.invalid"></button>&nbsp;
+  </p-footer>
+</p-panel>
+</form>

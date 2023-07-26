@@ -1,0 +1,454 @@
+<form #f="ngForm" disa autocomplete="off" (ngSubmit)="salvar(f)">
+    <div [class.hidden]="!showLoaderDialog" class="np-loader">
+      <p-progressSpinner strokeWidth="5"></p-progressSpinner>
+    </div>
+    <p-panel header="Atendimento&nbsp;&nbsp;&nbsp;{{atendimentoLai.numeroProtocolo}}">
+      <div class="card">
+        <p-tabView styleClass="tabview-custom" [activeIndex]="index" (change)="index">
+          <p-tabPanel>
+            <ng-template pTemplate="header">
+              <span>Solicitante</span>
+            </ng-template>
+            <div class="card">
+                <div class="p-fluid p-formgrid p-grid">  
+
+                    <div class="p-col-12">
+                        <div class="p-field-checkbox">
+                          <label>Tipo de Usuário *&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                          <p-radioButton name="identificado" value="1" [(ngModel)]="atendimentoLai.tipoUsuario"  inputId="identificado"></p-radioButton>
+                          <label>Pessoa Fisica</label>
+                            <p-radioButton name="identificado1" value="2"  [(ngModel)]="atendimentoLai.tipoUsuario"  inputId="identificado1"></p-radioButton>
+                            <label>Pessoa Juridica</label>
+                        </div>            
+                      </div>
+
+                <div class="p-field p-col-12 p-md-4">
+                  <label>Solicitante *</label>
+                  <input pInputText type="text" name="solicitante" [(ngModel)]="atendimentoLai.nomeSolicitante"
+                   #solicitante="ngModel" required minlength="5">
+                </div>
+  
+                <div class="p-field p-col-12 p-md-2">
+                  <label for="uf">Documento</label>
+                  <p-dropdown inputId="codigoDocumento" [options]="tipoDocumentos" name="codigoDocumento"
+                    [(ngModel)]="atendimentoLai.tipoDocumento"
+                    placeholder="Selecione a opção" #codigoDocumento="ngModel">
+                  </p-dropdown>
+                </div>
+  
+                <div class="p-field p-col-12 p-md-2">
+                  <label for="numeroDocumento">Nº Documento</label>
+                  <input id="numeroDocumento" type="text"  name="numeroDocumento"
+                    [(ngModel)]="atendimentoLai.numeroDocumento"
+                    #numeroDocumento="ngModel" pInputText>
+                </div>
+  
+                <div class="p-field p-col-12 p-md-2">
+                  <label for="fone">Telefone</label>
+                  <p-inputMask id="telefone" type="text" mask="(99) 99999-9999" name="telefone"
+                   [(ngModel)]="atendimentoLai.telefone" #telefone="ngModel">  
+                  </p-inputMask>
+                </div>
+            
+                <div class="p-field p-col-6 p-md-4">
+                  <label for="email">Email</label>
+                  <input id="email" type="text" email name="emailOrgao" 
+                    [(ngModel)]="atendimentoLai.email" #email="ngModel" pInputText>
+
+                </div>
+
+                <div class="p-field p-col-3 p-md-4">
+                    <label>UF</label>
+                    <p-dropdown inputId="uf" placeholder="Selecione o tipo de documento"  name="uf" [options]="ufs"
+                              [(ngModel)]="atendimentoLai.uf" 
+                                #uf="ngModel" 
+                             ></p-dropdown>
+                  </div>            
+                  <div class="p-field p-col-3 p-md-4">
+                    <label>Cidade</label>
+                    <input pInputText type="text" name="municipio" [(ngModel)]="atendimentoLai.cidade"
+                     #municipio="ngModel">
+                  </div>                            
+  
+            </div>
+            </div>
+          </p-tabPanel>
+          <p-tabPanel header="Header II">
+            <ng-template pTemplate="header">
+              <span>Pedido de Informação</span>
+            </ng-template>
+            <div class="card">
+              <div class="p-fluid p-formgrid p-grid">
+  
+                <div class="p-field p-col-2">
+                  <label>Data Entrada *</label>
+                  <input type="text" name="dataEntrada" readonly
+                    [ngModel]="atendimentoLai.dataEntrada | date: 'dd-MM-yyyy'" #dataEntrada="ngModel"
+                    (ngModelChange)="atendimentoLai.dataEntrada = $event" pInputText>
+  
+                </div>
+  
+                <div class="p-field p-col-12 p-md-2">
+                  <label for="dataPrazo">Data Prazo *</label>
+                  <input type="text" name="dataPrazo" readonly [ngModel]="atendimentoLai.dataPrazo | date:'dd-MM-yyyy'"
+                    #dataPrazo="ngModel" (ngModelChange)="atendimentoLai.dataPrazo = $event" pInputText>
+                </div>
+  
+                <div class="p-field p-col-12 p-md-2">
+                  <label for="area">Instituição *</label>
+                  <p-dropdown inputId="instituicao"
+                    [options]="listaInstituicoes"
+                    name="instituicao"
+                    [(ngModel)]="atendimentoLai.instituicao"
+                    (onChange)="carregarAreas();"
+                    placeholder="Selecione a opção" 
+                    #instituicao="ngModel">
+                  </p-dropdown>
+                </div>
+  
+                <div class="p-field p-col-12 p-md-6">  
+                  <label for="area">Área *</label>
+                  <p-dropdown inputId="area" [required]="true" [options]="listaAreas" name="area"     (onChange)="carregarAssuntos();" [(ngModel)]="atendimentoLai.area"
+                    placeholder="Selecione a opção" #area="ngModel">
+                  </p-dropdown>
+                </div>
+
+                <div class="p-field p-col-12 p-md-2">
+                  <label for="area">Origem Contato *</label>
+                  <p-dropdown inputId="origemContato" [required]="true" [options]="origensContato" name="origemContato" [(ngModel)]="atendimentoLai.origemContato"
+                    placeholder="Selecione a opção" #origemContato="ngModel">
+                  </p-dropdown>
+                </div>
+
+                <div class="p-field p-col-12 p-md-10">
+                  <label for="assunto">Assunto *</label>
+                  <p-dropdown inputId="assunto" required="true" name="assunto" [options]="listaAssuntos"
+                    [(ngModel)]="atendimentoLai.assunto" placeholder="Selecione a opção" #assunto="ngModel">
+                  </p-dropdown>
+                </div>
+
+                <div class="p-col-12 p-md-10 p-fluid">
+                  <label>Descrição *</label>
+                  <textarea rows="4" cols="50"  name="descricao" readonly="true"
+                    [(ngModel)]="atendimentoLai.descricao" #descricao="ngModel" pInputTextarea></textarea>
+                </div>
+
+  
+              </div>
+            </div>
+          </p-tabPanel>
+          <p-tabPanel header="Header III">
+            <ng-template pTemplate="header">
+              <span>Encaminhamento</span>
+            </ng-template>
+            <p-table [value]="encaminhamentos"
+            styleClass="p-datatable-sm p-datatable-striped" [scrollable]="true" scrollHeight="400px"  [responsive]="true">
+             <ng-template pTemplate="header">
+                 <tr>
+                     <th style="width:4%"></th>
+                     <th style="width:8%">Status</th>
+                     <th style="width:10%; text-align: center;">Data</th>
+                     <th style="width:28%">Origem</th>
+                     <th style="width:20%">Destino</th>
+                     <th style="width:10%; text-align: center;">Prazo Resposta</th>
+                     <th style="width:10%; text-align: center">Satisfaz</th>
+                 </tr>
+             </ng-template>
+             <ng-template pTemplate="body" let-encaminhamento>
+              <tr [style]="encaminhamento.status === 1 ?
+              'background-color:Pink;' : encaminhamento.tipo === 'R' ? 'background-color:PaleGreen' : ''">
+                <td style="width:4%">
+                  <p-radioButton [class]="encaminhamento.status == 0 ? '' :
+                      encaminhamento.status == 1 ? 'inputHidden' :
+                      encaminhamento.tipo == null ? '' :
+                      'inputHidden'" [(name)]="encaminhamento.sequencial" [(value)]="encaminhamento.id"
+                  [(ngModel)]="idEncaminhamentoSelecao" [(inputId)]="encaminhamento.sequencial"></p-radioButton>
+                </td>
+                <td style="width:8%">
+                  <button pButton [title]="encaminhamento.tipo == null ? 'Encaminhamento Enviado' :
+                  'Retorno Encaminhamento'" (click)="encaminhamento.tipo == null ?
+                  showVisualizaDialog(encaminhamento.id) :
+                  showVisualizaResposta(encaminhamento.idResposta)" type="button" [icon]="encaminhamento.tipo == null ? 'pi pi-arrow-right'
+                  : 'pi pi-arrow-left'" [style]="encaminhamento.tipo == null ? 'border-radius: 50%;' :
+                  'border-radius: 50%; background-color:darkgreen;'"></button>
+                </td>
+                   <td style="width:10%; text-align: center; font-size: small;">
+                     {{encaminhamento.dataEncaminhamento | date:'dd/MM/yyyy'}}
+                   </td>
+                   <td style="width:28%; font-size: small;">
+                     {{encaminhamento.descricaoSetorOrigem}}
+                   </td>
+                   <td style="width:30%; font-size: small;">
+                     {{encaminhamento.descricaoSetorDestino}}
+                   </td>
+                   <td style="width:10%; text-align: center; font-size: small;">
+                    {{encaminhamento.dataPrazoResposta | date:'dd/MM/yyyy'}}
+                  </td>
+                   <td style="width:10%; text-align: center; font-size: small;">
+                     {{encaminhamento.tipo === 'R' ? encaminhamento.satisfaz === 1 ? 'Sim' :
+                    'Não' : ''}}
+                   </td>
+               </tr>
+             </ng-template>
+         </p-table>
+           <br>
+           <div>
+            <button pButton type="button"  (click)="showPosition()"
+            icon="pi pi-external-link" [disabled]="atendimentoLai.satisfaz===1 || atendimentoLai.status !==0 || atendimentoLai.assunto === 0" label="Incluir"></button>&nbsp;
+            <button pButton type="button" style="width: 100px;"  (click)="showCancela(idEncaminhamentoSelecao)"
+              icon="pi pi-times" [disabled]="idEncaminhamentoSelecao == null" label="Cancelar"></button>&nbsp;
+          </div>
+           <app-encaminhamento-lai (callParent)="onCallParent()"></app-encaminhamento-lai>
+           <app-resposta-manual-lai (callParent)="onCallParent()"></app-resposta-manual-lai>
+          </p-tabPanel>
+          <p-tabPanel header="Header IV">
+            <ng-template pTemplate="header">
+              <span>Resposta Parcial</span>
+            </ng-template>
+            <p-table [value]="respostasParciais" styleClass="p-datatable-sm p-datatable-striped" [paginator]="true" [rows]="5" [responsive]="true">
+              <ng-template pTemplate="header">
+                <tr>
+                  <th style="width:4%"></th>
+                  <th style="width:8%">Status</th>
+                  <th style="width:68%">Descrição</th>
+                  <th style="width:10%; text-align: center;">Data</th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-respostaParcial>
+                <tr>
+                  <td style="width:4%">
+                    <p-radioButton [(name)]="respostaParcial.id" [(value)]="respostaParcial.id"
+                      [(ngModel)]="idRespostaParcialSelecao" [(inputId)]="respostaParcial.id"></p-radioButton>
+                  </td>
+                  <td style="width:8%; text-align: center; font-size: small;">
+                    <button pButton title="Resposta parcial Enviada"
+                      (click)="showVisualizaRespostaParcial(respostaParcial.id)" type="button"
+                      icon="pi pi-arrow-right"></button>
+                  </td>
+                  <td style="width:68%; font-size: small;">
+                    <div [innerHTML]="respostaParcial.descricaoRespostaHTML"></div>
+                  </td>
+                  <td style="width:10%; text-align: center; font-size: small;">
+                    {{respostaParcial.dataResposta | date:'dd/MM/yyyy'}}
+                  </td>
+                </tr>
+              </ng-template>
+            </p-table>
+            <br>
+            <div>
+              
+              <button pButton type="button"  (click)="showRespostaParcial()"
+              icon="pi pi-external-link" [disabled]="atendimentoLai.satisfaz===1 || atendimentoLai.status !==0 || atendimentoLai.assunto === 0" label="Incluir"></button>&nbsp;
+ 
+  
+              <button pButton type="button" style="width: 100px;" (click)="showExcluir(idRespostaParcialSelecao)"
+                icon="pi pi-external-link" [disabled]="idRespostaParcialSelecao == null" label="Excluir"></button>&nbsp;
+            </div>
+            <app-resposta-parcial-lai (onCallParentRespostaParcialLai)="onCallParentRespostaParcialLai()"></app-resposta-parcial-lai>
+          </p-tabPanel>
+
+          <p-tabPanel header="Header V">
+            <ng-template pTemplate="header">
+              <span>Despacho</span>
+            </ng-template>
+            <p-table [value]="despachos" styleClass="p-datatable-sm p-datatable-striped" [paginator]="true" [rows]="5" [responsive]="true">
+              <ng-template pTemplate="header">
+                <tr>
+                  <th style="width:3%;"></th>
+                  <th style="width:5%;"></th>
+                  <th>Setor Destino</th>
+                  <th>Descrição</th>
+                  <th style="text-align: center;">Data</th>
+                  <th>Email</th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-despacho>
+                <tr>
+                  <td style="width:3%;">
+                    <p-radioButton [(name)]="despacho.id" [(value)]="despacho.id"
+                      [(ngModel)]="idDespachoSelecao" [(inputId)]="despacho.id"></p-radioButton>
+                  </td>
+                  <td style="width:5%; text-align: center; font-size: small;">
+                    <button pButton title="Resposta parcial Enviada"
+                      (click)="showVisualizaDespacho(despacho.id)" type="button"
+                      icon="pi pi-arrow-right"></button>
+                  </td>
+                  <td style="font-size: small;">
+                    {{despacho.descricaoSetorDestino}}
+                  </td>
+                  <td style="font-size: small;">
+                    <div [innerHTML]="despacho.descricaoRespostaHTML"></div>
+                  </td>
+                  <td style="text-align: center; font-size: small;">
+                    {{despacho.dataDespacho | date:'dd/MM/yyyy'}}
+                  </td>
+                  <td style="font-size: small;">
+                    {{despacho.emailEnviado}}
+                  </td>
+                </tr>
+              </ng-template>
+            </p-table>
+            <br>
+            <div>
+              <button pButton type="button"  (click)="showDespacho()"
+              icon="pi pi-external-link" [disabled]="atendimentoLai.satisfaz===1 || atendimentoLai.status !==0 || atendimentoLai.assunto === 0" label="Incluir"></button>&nbsp;
+              <button pButton type="button" style="width: 100px;" (click)="showExcluirDespacho(idDespachoSelecao)"
+                icon="pi pi-external-link" [disabled]="idDespachoSelecao == null" label="Excluir"></button>&nbsp;
+            </div>
+            <app-despacho-lai (onCallParentDespachoLai)="onCallParentDespachoLai()"></app-despacho-lai>
+          </p-tabPanel>
+
+          <p-tabPanel header="Header VI">
+            <ng-template pTemplate="header">
+              <span>Resposta Pedido</span>
+            </ng-template>
+            <div>
+            <div class="p-col-12 p-md-12 p-fluid">
+              <label><b>Resposta do Pedido *</b></label>
+              <p-editor [(ngModel)]="atendimentoLai.resposta"
+               name="modelo"
+               [readonly]="true"
+               [style]="{'height':'130px'}"></p-editor>
+            </div>
+            </div>
+          </p-tabPanel>
+
+          <p-tabPanel header="Header VII">
+            <ng-template pTemplate="header">
+              <span>Recursos</span>
+            </ng-template>
+            <p-table [value]="recursos" styleClass="p-datatable-sm p-datatable-striped" [paginator]="true" [rows]="5" [responsive]="true">
+              <ng-template pTemplate="header">
+                <tr>
+                  <th style="width:3%;"></th>
+                  <th style="width:5%;"></th>
+                  <th style="text-align: center;">Tipo</th>
+                  <th style="text-align: center;">Status</th>
+                  <th style="text-align: center;">Data Recurso</th>
+                  <th style="text-align: center;">Data Prazo</th>
+                  <th style="text-align: center;">Resultado</th>
+                  <th>Justificativa</th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-recurso>
+                <tr>
+                  <td style="width:3%;">
+                    <p-radioButton [(name)]="recurso.id" [(value)]="recurso.id"
+                      [(ngModel)]="idRecursoSelecao" [(inputId)]="recurso.id"></p-radioButton>
+                  </td>
+                  <td style="width:5%; text-align: center; font-size: small;">
+                    <button pButton title="Recurso"
+                      (click)="showVisualizaRecurso(recurso.id)" type="button"
+                      icon="pi pi-arrow-right"></button>
+                  </td>
+                  <td style="font-size: small; text-align: center;">
+                    {{recurso.descricaoTipo}}
+                  </td>
+                  <td style="font-size: small; text-align: center;">
+                    {{recurso.descricaoStatus}}
+                  </td>
+                  <td style="text-align: center; font-size: small;">
+                    {{recurso.dataRecurso | date:'dd/MM/yyyy'}}
+                  </td>
+                  <td style="text-align: center; font-size: small;">
+                    {{recurso.dataPrazo | date:'dd/MM/yyyy'}}
+                  </td>
+                  <td style="text-align: center; font-size: small;">
+                    {{recurso.descricaoResultado}}
+                  </td>
+                  <td style="font-size: small;">
+                    {{recurso.justificativa}}
+                  </td>
+                </tr>
+              </ng-template>
+            </p-table>
+            <app-recurso-lai (onCallParentRecursoLai)="onCallParentRecursoLai()"></app-recurso-lai>
+          </p-tabPanel>
+
+        </p-tabView>
+      </div>
+      <app-anexo-lai></app-anexo-lai>
+      <p-footer>
+        <button pButton type="submit" label="Salvar"  [disabled]="f.invalid || atendimentoLai.status !== 0"  icon="pi pi-check"
+          ></button>&nbsp;
+
+          <button pButton type="button"  (click)="showResponderPedido()" [disabled]="f.invalid || atendimentoLai.status === 2 || atendimentoLai.status === 1"  icon="pi pi-external-link"  label="Responder Pedido"></button>&nbsp;
+
+          <button pButton type="button" label="Anexar" style="width: 70px;" (click)="showAnexo()"
+          [disabled]="atendimentoLai.status==2"></button>&nbsp;
+
+          <button pButton type="button"  (click)="showProrrogarPrazo()" [disabled]="f.invalid || atendimentoLai.status === 2 || atendimentoLai.status === 1 || atendimentoLai.prazoProrrogado === 1"  icon="pi pi-external-link"  label="Prorrogar Prazo"></button>&nbsp;
+
+        <button pButton type="button" label="Voltar" (click)="voltar()" icon="pi pi-chevron-left"></button>
+        &nbsp;&nbsp;&nbsp; * Campos obrigatórios
+      </p-footer>
+    </p-panel>
+  </form>  
+
+  <p-dialog header="Responder Pedido" id="modalResponderPedido"
+  position="top" [(visible)]="displayModalResponderPedido"
+  [style]="{width: '70vw'}">
+  <form #myForm="ngForm" autocomplete="off"  (ngSubmit)="responderPedido()">
+    <div class="card">
+      <div class="p-fluid p-formgrid p-grid">
+        <div class="p-col-3 p-md-3 p-fluid">
+          <label>
+            <b>Resultado do Pedido</b>
+          </label>
+          <p-dropdown inputId="resultadoPedido" [options]="resultadosPedido" name="resultadoPedido"
+            [(ngModel)]="resultadoPedido" 
+            placeholder="Selecione a opção">
+          </p-dropdown>
+        </div>
+    
+    <div class="p-col-9 p-md-9 p-fluid">
+      <label>
+        <b>Modelo de Documento</b>
+      </label>
+      <p-dropdown inputId="modeloDocumento" [options]="modeloDocumentos" name="modeloDocumento"
+        [(ngModel)]="modeloDocumento" (onChange)="consultaModelo()"
+        placeholder="Selecione a opção">
+      </p-dropdown>
+    </div>
+    <div class="p-col-12 p-md-12 p-fluid">
+      <label><b>Resposta do Atendimento *</b></label>  
+      <p-editor [(ngModel)]="modelo"
+       name="modelo"
+       required
+       [style]="{'height':'130px'}"></p-editor>
+    </div>
+    <div class="p-field p-col-12">
+      Abaixo estão os arquivos anexos ao seu Atendimento. Caso queira enviar algum destes junto com o e-mail de encaminhamento, basta selecioná-lo abaixo:
+      <p-table [value]="anexos" [responsive]="true">
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="width:5%;"></th>
+            <th>Arquivo Anexo</th>
+            <th>Responsável Anexo</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-anexo>
+          <tr>
+            <td>
+              <p-checkbox name="anexo" [(value)]="anexo.id" [(ngModel)]="atendimentoLai.selectedAnexos" [(inputId)]="anexo.id"></p-checkbox>
+            </td>
+            <td>
+              {{anexo.nomeArquivo}}
+            </td>
+            <td>
+              {{anexo.nomeResponsavel}}
+            </td>                
+          </tr>
+        </ng-template>
+      </p-table>
+      </div>
+    </div>
+    </div>
+    <button pButton type="submit" label="Salvar" [disabled]="myForm.invalid"  class="ui-button prime-button" [disabled]="myForm.invalid"></button>
+    <button pButton type="button" label="Fechar" class="ui-button-secondary prime-button" (click)="onClose()"></button>
+    &nbsp;&nbsp;&nbsp; * Campos obrigatórios
+  </form>
+</p-dialog>
+
+  
+  

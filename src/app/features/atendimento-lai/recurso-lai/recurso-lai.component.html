@@ -1,0 +1,94 @@
+<p-dialog header="Recurso" id="modalRecurso"
+position="top" [(visible)]="displayRecursoLaiModal"
+[style]="{width: '70vw'}">
+<form #myForm="ngForm" autocomplete="off"  (ngSubmit)="responderRecurso()">
+  <div class="card">
+    <div class="p-fluid p-formgrid p-grid">
+
+        <div class="p-col-12 p-lg-3">
+            <label>Data do Recurso</label>
+            <input type="text" name="dataRecurso" readonly style="background-color: dimgray; color: aliceblue;"
+            [ngModel]="recursoLai.dataRecurso | date: 'dd-MM-yyyy'" #dataRecurso="ngModel"
+            (ngModelChange)="recursoLai.dataRecurso = $event" pInputText>
+        </div>            
+
+        <div class="p-col-12 p-lg-3">
+            <label>Prazo Resposta</label>
+            <input type="text" name="dataPrazo" readonly style="background-color: dimgray; color: aliceblue;"
+            [ngModel]="recursoLai.dataPrazo | date: 'dd-MM-yyyy'" #dataPrazo="ngModel"
+            (ngModelChange)="recursoLai.dataPrazo = $event" pInputText>
+        </div>  
+
+        <div class="p-col-12 p-lg-3">
+            <label>Tipo de Recurso</label>
+            <input type="text" name="descricaoTipo" readonly style="background-color: dimgray; color: aliceblue;"
+            [ngModel]="recursoLai.descricaoTipo" #descricaoTipo="ngModel"
+            pInputText>
+        </div>  
+        <div class="p-col-12 p-lg-3">
+            <label>Status</label>
+            <input type="text" name="descricaoStatus" readonly style="background-color: dimgray; color: aliceblue;"
+            [ngModel]="recursoLai.descricaoStatus" #descricaoStatus="ngModel"
+             pInputText>
+        </div>  
+        <div class="p-col-12 p-lg-12">
+            <label>Justificativa do Recurso *</label>
+            <textarea rows="3" cols="50" name="justificativa" readonly [(ngModel)]="recursoLai.justificativa"
+              #justificativa="ngModel" required="true" pInputTextarea></textarea>
+        </div>   
+        <div class="p-col-12 p-lg-3">
+            <label>Data Resposta</label>
+            <input type="text" name="dataResposta" readonly style="background-color: dimgray; color: aliceblue;"
+                [ngModel]="recursoLai.dataResposta | date: 'dd-MM-yyyy'" #dataResposta="ngModel"
+                (ngModelChange)="recursoLai.dataResposta = $event" pInputText>
+        </div>  
+        <div class="p-col-12 p-lg-3">
+            <label>
+                <b>Resultado do Recurso</b>
+            </label>
+            <p-dropdown inputId="resultado" [options]="resultadosRecurso" name="resultado" 
+                [(ngModel)]="recursoLai.resultado" required="true"
+                placeholder="Selecione a opção">
+            </p-dropdown>
+        </div>
+  
+        <div class="p-col-12 p-lg-6">
+            <label>
+            <b>Modelo de Documento</b>
+            </label>
+            <p-dropdown inputId="modeloDocumento" [options]="modeloDocumentos" name="modeloDocumento"
+                [(ngModel)]="recursoLai.modeloDocumento" (onChange)="consultaModelo()" 
+                placeholder="Selecione a opção">
+            </p-dropdown>
+        </div>
+
+        <div class="p-col-12 p-md-12 p-fluid">
+            <label><b>Resposta do Recurso *</b></label>
+            <p-editor [(ngModel)]="recursoLai.respostaRecurso"
+                name="respostaRecurso"
+                required
+                [style]="{'height':'100px'}"></p-editor>
+        </div>
+
+        <div class="p-field p-col-12">
+            <label><b>Incluir Anexo</b></label>
+            <p-fileUpload name="anexo" [auto]="true"
+  
+            invalidFileSizeMessageDetail="O tamanho máximo permitido de arquivos é de 10"
+             [customUpload]="true" chooseLabel="Selecione o arquivo"  (uploadHandler)="carregaArquivo($event)"
+            [multiple]="true" accept="image/*,application/*" [maxFileSize]="5000000">
+            <ng-template pTemplate="content">
+                <ul *ngIf="uploadedFiles.length">
+                    <li  *ngFor="let file of uploadedFiles">{{file.name}}</li>
+                </ul>
+            </ng-template>
+          </p-fileUpload>
+        </div>        
+  
+      </div>
+  </div>
+  <button pButton type="submit" label="Responder" [disabled]="myForm.invalid || recursoLai.idUsuarioResposta !== null"  class="ui-button prime-button"></button>
+  <button pButton type="button" label="Fechar" class="ui-button-secondary prime-button" (click)="onClose()"></button>
+  &nbsp;&nbsp;&nbsp; * Campos obrigatórios
+</form>
+</p-dialog>

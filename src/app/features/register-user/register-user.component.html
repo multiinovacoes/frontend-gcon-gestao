@@ -1,0 +1,39 @@
+<div class="user-regisration">
+  <div class="p-grid p-nogutter p-justify-center p-align-center" style="height:100%">
+    <div class="p-xl-3 p-lg-6 p-md-8 p-sm-10">
+      <form [formGroup]="userform" (ngSubmit)="redefinicaoSenha()">
+        <p-panel header="GCON - Redefinição de Senha">
+          <div class="p-grid p-justify-center p-align-center">
+            <div class="p-xl-6 p-lg-6 p-md-8 p-sm-10">
+              <img src="assets/images/logo_lai.png" class="login-logo">
+            </div>
+            <div class="p-col-12">
+              <div class="ui-inputgroup">
+                <span class="ui-inputgroup-addon"><i class="fa fa-at"></i></span>
+                <input id="float-input-emailid" type="email" size="30" pInputText formControlName="emailId"
+                  placeholder="Informe seu email" required>
+              </div>
+            </div>
+            <div class="p-col-12" *ngIf="userform.controls['emailId'].errors && userform.controls['emailId'].dirty">
+              <p-message severity="error" text="Email é obrigatório"
+                *ngIf="userform.controls['emailId'].errors['required']"></p-message>
+              <p-message severity="error" text="Email inválido" *ngIf="userform.controls['emailId'].errors['email']">
+              </p-message>
+            </div>
+          </div>
+          <br>
+          <div class="p-grid">
+            <div>
+              <button pButton type="submit" label="Redefinir Senha" [disabled]="!userform.valid"></button>
+            </div>
+            <div>
+              <button pButton type="button" label="Login" 
+                (click)="onClickGoToLogin()"></button>
+            </div>
+          </div>
+        </p-panel>
+     
+      </form>
+    </div>
+  </div>
+</div>

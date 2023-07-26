@@ -1,0 +1,29 @@
+<div class="ng-header">
+    <div class="ng-header-left left">
+        <div class="toggle-menu-button left">
+            <a class="icon" (click)="toggleMenu()"><i class="fa fa-bars"></i></a>
+        </div>
+        <div class="logo right">
+            <img src="assets/images/logo_lai.png" class="logo-large">
+            <img src="assets/images/logo-small.png" class="logo-small">
+        </div>
+    </div>
+    <div class="ng-header-right right">
+        <div class="ng-header-right-item right">
+            <a class="icon" (click)="logout()"><i class="fa fa-sign-out-alt"></i></a>
+        </div>
+        <div class="ng-header-right-item right" (click)="userdetails.toggle($event)">
+            <a class="icon"><span [innerHtml]="user.nome" class="user-name"></span><i class="fa fa-user"></i></a>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!-- user detials overlay panel -->
+<p-overlayPanel #userdetails>
+    <div><b>Nome: </b><i [innerHtml]="user.nome"></i></div>
+</p-overlayPanel>
+
+

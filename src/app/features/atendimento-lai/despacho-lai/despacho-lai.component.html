@@ -1,0 +1,81 @@
+<p-dialog header="Despacho"
+  position="top" [(visible)]="displayDespachoLaiModal"
+  [style]="{width: '50vw'}">
+
+  <form #myForm="ngForm" autocomplete="off" (ngSubmit)="salvar()">
+
+    <div class="p-fluid p-formgrid p-grid">
+
+    <div class="p-col-12 p-lg-6">
+      <label>Setor Destino</label>
+      <input id="descricaoSetorDestino" type="text" disabled="true"  name="descricaoSetorDestino"
+        [(ngModel)]="despachoLai.descricaoSetorDestino"
+        #descricaoSetorDestino="ngModel" pInputText>
+    </div>
+
+    <div class="p-col-12 p-lg-6">
+      <label>Email do Setor</label>
+      <input id="emailEnviado" type="text" disabled="true"  name="emailEnviado"
+        [(ngModel)]="despachoLai.emailEnviado"
+        #emailEnviado="ngModel" pInputText>
+    </div>
+
+    <div class="p-col-12 p-lg-12">
+      <label>
+        <b>Modelo de Documento</b>
+      </label>
+      <p-dropdown inputId="modeloDocumento" [options]="modeloDocumentos" name="modeloDocumento"
+        [(ngModel)]="despachoLai.modeloDocumento" (onChange)="consultaModelo(despachoLai.modeloDocumento)"
+        placeholder="Selecione a opção">
+      </p-dropdown>
+    </div>
+    <div class="p-col-12 p-lg-12">
+      <label><b>Descrição do Despacho *</b></label>
+      <p-editor [(ngModel)]="despachoLai.descricao"
+       name="modelo"
+       required
+       [style]="{'height':'130px'}"></p-editor>
+    </div>
+    </div>
+    
+    <button pButton type="submit" label="Salvar" class="ui-button prime-button" [disabled]="myForm.invalid"></button>&nbsp;
+    <button pButton type="button" label="Fechar" class="ui-button-secondary prime-button" (click)="onClose()"></button>
+    &nbsp;&nbsp;&nbsp; * Campos obrigatórios
+  </form>
+</p-dialog>
+
+
+<p-dialog header="Visualiza Despacho" position="top" [(visible)]="displayModalVisualizaDespachoLai" [style]="{width: '70vw'}" id="dialog2">
+
+  <p-card  styleClass="ui-card-shadow">
+    <div id="print-section2">
+    <p-header>
+      <p-card header="Dados do Despacho">
+      <div class="p-fluid p-formgrid p-grid">
+        <div class="p-field p-col-5">
+          <label>Email</label>
+          <div>
+            <label>{{despachoLai.emailEnviado}}</label>
+          </div>
+        </div>
+      </div>
+    </p-card>
+    </p-header>
+    <p-card header="Descrição do Despacho">
+    <div class="p-field p-col-12">
+      <div>
+        <div [innerHTML]="despachoLai.descricao"></div>
+      </div>
+    </div>
+    </p-card>
+   </div>
+    <p-footer>
+      <button pButton type="button" label="Fechar" class="ui-button prime-button"
+      (click)="onCloseVisualiza()"></button>&nbsp;
+      <button pButton type="button" printTitle = "Impressão"
+      label="Imprimir" class="ui-button prime-button"
+      printSectionId="print-section2" ngxPrint></button>
+    </p-footer>
+  </p-card>
+</p-dialog>
+

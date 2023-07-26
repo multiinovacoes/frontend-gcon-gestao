@@ -1,0 +1,48 @@
+import { Manifestante } from "./manifestante.model";
+import { User } from "./user.model";
+
+export class AtendimentoLai {
+  id: number;
+  descricao: string;
+  status: number;
+  orgao: number;
+  numeroAtendimento: string;
+  numeroProtocolo: string;
+  anoAtendimento: string;
+  nomeSolicitante: string;
+  tipoDocumento: number;
+  numeroDocumento: string;
+  uf: string;
+  cidade: string;
+  email: string;
+  telefone: string;
+  dataEntrada: Date;
+  origemContato: any;
+  usuarioCriacao: number;
+  dataCriacao: Date;
+  usuarioAlteracao: any;
+  dataAlteracao: Date;
+  dataPrazo: any;
+  area: number;
+  assunto: number;
+  natureza: number;
+  statusAtendimento: number;
+  resposta: string;
+  observacao: string;
+  dataConclusao: Date;
+  satisfaz: number;
+  sequencialOrgao: number;
+  instituicao: any;
+  atendimentoLaiDto: AtendimentoLai;
+  tipoUsuario: number;
+  selectedAnexos: any[] = [];
+  prazoProrrogado: number;
+  descricaoArea: string;
+  descricaoInstituicao: string;
+  descricaoStatusAtendimento: string;
+  dataPrazoRespostaSetor: Date;
+  descricaoSetorEncaminhado: string;
+  qtdDiasVencimentoSetor: number;
+  qtdCobrancaEmail: number;
+  resultadoPedido: number;
+}

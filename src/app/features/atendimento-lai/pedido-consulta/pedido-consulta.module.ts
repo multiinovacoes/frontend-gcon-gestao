@@ -1,0 +1,19 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { AppCommonModule } from 'src/app/app.common.module';
+import { HeaderBreadCrumbModule } from 'src/app/shared/layout/header-breadcrumb/header-breadcrumb.module';
+import { PedidoConsultaRoutingModule } from './pedido-consulta.routing';
+import { PedidoConsultaComponent } from './pedido-consulta.component';
+
+@NgModule({
+  imports: [
+    CommonModule,
+    PedidoConsultaRoutingModule,
+    AppCommonModule,
+    HeaderBreadCrumbModule
+  ],
+  declarations: [
+    PedidoConsultaComponent
+  ]
+})
+export class PedidoConsultaModule { }

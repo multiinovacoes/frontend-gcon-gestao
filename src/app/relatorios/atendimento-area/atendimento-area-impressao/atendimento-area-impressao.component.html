@@ -1,0 +1,22 @@
+<p-table [value]="atendimentoArea" styleClass="p-datatable-striped">
+  <ng-template pTemplate="header">
+      <tr>
+          <th>Protocolo</th>
+          <th>Data Entrada</th>
+          <th>Assunto</th>
+          <th>Natureza</th>
+          <th>Status</th>
+          <th>Data Conclusão</th>
+      </tr>
+  </ng-template>
+  <ng-template pTemplate="atendimentoArea" let-atendimento>
+      <tr>
+          <td>{{atendimento.protocolo}}</td>
+          <td>{{atendimento.data}}</td>
+          <td>{{atendimento.assunto}}</td>
+          <td>{{atendimento.natureza}}</td>
+          <td>{{atendimento.status}}</td>
+          <td>{{atendimento.dataConclusao}}</td>
+      </tr>
+  </ng-template>
+</p-table>

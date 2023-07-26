@@ -1,0 +1,72 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<p-sidebar [visible]="visible" position="left" [showCloseIcon]="false" styleClass="np-menubar" [modal]="false">
+    <ul class="np-menu">
+        <ng-template #recursiveList let-list>
+            <li *ngFor="let menu of list">
+              <hr *ngIf="menu.Icon != null" class="sidebar-divider">
+                <a *ngIf="menu.RouterLink != 'helpdesk' && menu.RouterLink != 'sair' && menu.RouterLink != 'manual' && menu.Icon != 'fa-desktop'" (click)="onMenuClick(menu)"  [ngClass]="{'active': selectedItem == menu.Label}">
+                    <i class="fa fa-fw" [ngClass]="menu.Icon"></i>
+                    {{menu.Label | translate}}
+                    <i class="fa right" *ngIf="menu.Childs != null"
+                        [ngClass]="{'fa-angle-down': !menu.IsChildVisible,'fa-angle-up': menu.IsChildVisible }">
+                    </i>
+                    <i class="fa right" *ngIf="menu.RouterLink == '/painel/novos-pedidos-inf'">
+                      <span  class="badge pull-right" style="background-color:#006600 !important">{{qtdNovosPedidos}}</span>
+                    </i>
+                    <i class="fa right" *ngIf="menu.RouterLink == '/painel/pedidos-enviados-inf'">
+                      <span  class="badge pull-right" style="background-color:#2277c1 !important">{{qtdPedidosEncaminhados}}</span>
+                    </i>
+                    <i class="fa right" *ngIf="menu.RouterLink == '/painel/pedidos-enviados-vencimento-inf'">
+                      <span  class="badge pull-right" style="background-color:#dfeb35 !important">{{qtdPedidosEncaminhadosVencimento}}</span>
+                    </i>
+                    <i class="fa right" *ngIf="menu.RouterLink == '/painel/pedidos-enviados-vencidos-inf'">
+                      <span  class="badge pull-right" style="background-color:#ad2713 !important">{{qtdPedidosEncaminhadosVencidos}}</span>
+                    </i>
+                    <i class="fa right" *ngIf="menu.RouterLink == '/painel/pedidos-recebidos-inf'">
+                      <span  class="badge pull-right" style="background-color:#2277c1 !important">{{qtdPedidosEncaminhadosRecebidos}}</span>
+                    </i>
+                    <i class="fa right" *ngIf="menu.RouterLink == '/painel/pedidos-vencidos-inf'">
+                      <span  class="badge pull-right" style="background-color:#ad2713 !important">{{qtdPedidosVencidos}}</span>
+                    </i>
+                    <i class="fa right" *ngIf="menu.RouterLink == '/painel/novas-manifestacoes'">
+                      <span  class="badge pull-right" style="background-color:#006600 !important">{{qtdNovasManifestacoes}}</span>
+                    </i>
+                    <i class="fa right" *ngIf="menu.RouterLink == '/painel/encaminhamentos-recebidos'">
+                      <span  class="badge pull-right" style="background-color:#14b5c8">{{qtdEncaminahmentosRec}}</span>
+                    </i>
+                    <i class="fa right" *ngIf="menu.RouterLink == '/painel-recurso/recurso-aberto'">
+                      <span  class="badge pull-right" style="background-color:#006600 !important">{{qtdRecursosAbertos}}</span>
+                    </i>
+                    <i class="fa right" *ngIf="menu.RouterLink == '/painel-recurso/recurso-vencido'">
+                      <span  class="badge pull-right" style="background-color:#ad2713 !important">{{qtdRecursosVencidos}}</span>
+                    </i>
+                    <i class="fa right" *ngIf="menu.RouterLink == '/painel-recurso/recurso-vencimento'">
+                      <span  class="badge pull-right" style="background-color:#ad2713 !important">{{qtdRecursosVencimento}}</span>
+                    </i>
+
+                </a>
+                <a *ngIf="menu.Icon == 'fa-desktop'"  [ngClass]="{'active': selectedItem == menu.Label}">
+                  <i class="fa fa-fw" [ngClass]="menu.Icon"></i>
+                  {{menu.Label | translate}}
+                  <i class="fa right" >
+                    <span  class="pi  pi-refresh" title="Atualizar" (click)="refresh();"></span>
+                  </i>
+                </a>
+                <a *ngIf="menu.RouterLink == 'helpdesk'" href="http://multi.pontualdesk.com.br/login" target="_blank" [ngClass]="{'active': selectedItem == menu.Label}">
+                  <i class="fa fa-fw" [ngClass]="menu.Icon"></i>
+                  {{menu.Label | translate}}
+                </a>
+                <a *ngIf="menu.RouterLink == 'sair'" (click)="logout()">
+                  <i class="fa fa-fw" [ngClass]="menu.Icon"></i>
+                  {{menu.Label | translate}}
+
+                 </a>
+                <ul *ngIf="menu.Childs && menu.Childs.length > 0 && menu.IsChildVisible" class="np-sub-menu">
+                    <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: menu.Childs }">
+                    </ng-container>
+                </ul>
+            </li>
+        </ng-template>
+        <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: items }"></ng-container>
+    </ul>
+</p-sidebar>

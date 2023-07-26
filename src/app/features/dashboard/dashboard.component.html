@@ -1,0 +1,100 @@
+<app-header-breadcrumb></app-header-breadcrumb>
+<div [class.hidden]="!showLoaderDialogDashboard" class="np-loader">
+  <p-progressSpinner strokeWidth="5"></p-progressSpinner>
+</div>
+
+<div class="p-fluid p-formgrid p-grid">   
+    
+    <div class="p-fluid p-formgrid p-grid p-col-12">           
+
+        <div class="p-fluid p-formgrid p-grid p-col-12">           
+            <div class="p-col-12 p-lg-3">
+                <div class="card border-left-success shadow h-100 py-2">
+                    <div class="card-body">
+                        <a   class="icon-home">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                        Novos Pedidos</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{qtdNovosPedidos}}</div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="far fa-comment-alt" ></i>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="p-col-12 p-lg-3">
+
+                <div class="card border-left-success shadow h-100 py-2">
+                    <div class="card-body">
+                        <a   class="icon-cog">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                    Pedidos encaminhados</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{qtdPedidosEncaminhados}}</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-search" ></i>
+                            </div>
+                        </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="p-col-12 p-lg-3">
+
+                <div class="card border-left-info shadow h-100 py-2">
+                    <div class="card-body">
+                        <a   class="icon-cw">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Pedidos encaminhados vencidos
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{qtdPedidosEncaminhadosVencidos}}</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="far fa-folder-open" ></i>
+                            </div>
+                        </div>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+    
+            <div class="p-col-12 p-lg-3">
+
+                <div class="card border-left-warning shadow h-100 py-2">
+                    <div class="card-body">
+                        <a   class="icon-location">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                    Pedidos vencidos</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{qtdPedidosVencidos}}</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="far fa-address-book" ></i>
+                            </div>
+                        </div>
+                        </a>
+                    </div>
+                </div>                
+
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+
+
+
+
